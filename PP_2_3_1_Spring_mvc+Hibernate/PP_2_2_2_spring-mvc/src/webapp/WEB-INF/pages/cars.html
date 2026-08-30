@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список автомобилей</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .controls input[type="number"] {
+            width: 70px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .controls button {
+            padding: 6px 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+        .controls button:hover {
+            background-color: #45a049;
+        }
+        .controls a {
+            margin-left: 15px;
+            color: #2196F3;
+            text-decoration: none;
+        }
+        .controls a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .empty-message {
+            text-align: center;
+            color: #888;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Каталог автомобилей</h2>
+
+    <!-- Форма управления количеством -->
+    <div class="controls">
+        <form action="/cars" method="get">
+            <label for="count">Количество:</label>
+            <input type="number" id="count" name="count" min="1" max="5" placeholder="кол-во" />
+            <button type="submit">Показать</button>
+        </form>
+        <a href="/cars">Показать весь</a>
+    </div>
+
+    <!-- Таблица с автомобилями -->
+    <table>
+        <thead>
+        <tr>
+            <th>Марка</th>
+            <th>Модель</th>
+            <th>Год выпуска</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car : ${cars}">
+            <td th:text="${car.brand}">Toyota</td>
+            <td th:text="${car.model}">Camry</td>
+            <td th:text="${car.prodYear}">2020</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(cars)}">
+            <td colspan="3" class="empty-message">Нет доступных автомобилей</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
