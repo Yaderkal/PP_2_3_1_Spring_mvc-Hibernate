@@ -1,41 +1,44 @@
 package web.model;
 
-
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
-@Component
-public class User {
+
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    @Column(name = "name")
-    String name;
-    @Column(name = "middleName")
-    String middleName;
-    @Column(name = "surName")
-    String surName;
-    @Column(name = "mail")
-    String mail;
+    private Long id;
 
-    public User(int id, String name, String middleName, String surName, String mail) {
-        this.id = id;
-        this.name = name;
-        this.middleName = middleName;
-        this.surName = surName;
-        this.mail = mail + "domain.com";
-    }
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "middle_name")
+    private String middleName;
+
+    @Column(name = "sur_name")
+    private String surName;
+
+    @Column(name = "mail")
+    private String mail;
 
     public User() {
     }
 
-    public int getId() {
+    public User(String name, String middleName, String surName, String mail) {
+        this.name = name;
+        this.middleName = middleName;
+        this.surName = surName;
+        this.mail = mail;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,19 +50,19 @@ public class User {
         this.name = name;
     }
 
-    public String getMiddleName() {
+    public String getMiddleName() {  // ← getMiddleName()
         return middleName;
     }
 
-    public void setMiddleName(String middleName) {
+    public void setMiddleName(String middleName) {  // ← setMiddleName()
         this.middleName = middleName;
     }
 
-    public String getSurName() {
+    public String getSurName() {  // ← getSurName()
         return surName;
     }
 
-    public void setSurName(String surName) {
+    public void setSurName(String surName) {  // ← setSurName()
         this.surName = surName;
     }
 
@@ -73,9 +76,14 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(name, user.name) && Objects.equals(middleName, user.middleName) && Objects.equals(surName, user.surName) && Objects.equals(mail, user.mail);
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(middleName, user.middleName) &&
+                Objects.equals(surName, user.surName) &&
+                Objects.equals(mail, user.mail);
     }
 
     @Override
