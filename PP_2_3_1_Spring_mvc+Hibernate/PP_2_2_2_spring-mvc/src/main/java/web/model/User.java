@@ -2,10 +2,11 @@ package web.model;
 
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Objects;
-@Entity
+@Component
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

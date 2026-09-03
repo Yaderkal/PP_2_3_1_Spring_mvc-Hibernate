@@ -10,10 +10,11 @@ import java.util.List;
 @Repository
 public class UserDAOImpl implements UserDAO {
     private final EntityManager entityManager;
-    @Autowired
-    public UserDAOImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
+
+    public UserDAOImpl() {
+        entityManager = null;
     }
+
 
     @Override
     public void createUsersTable() {
