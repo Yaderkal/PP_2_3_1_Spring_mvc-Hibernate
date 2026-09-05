@@ -28,13 +28,13 @@ public class UserController {
             model.addAttribute("users", users);
             return "users";
         } catch (SQLException e) {
-            model.addAttribute("error", "Error loading users: " + e.getMessage());
+            model.addAttribute("error", "Ошибка загрузки пользователей: " + e.getMessage());
             return "error";
         }
     }
 
-    @GetMapping("/{id}")
-    public String getUserById(@PathVariable Long id, Model model) {
+    @GetMapping("/get")
+    public String getUserById(@RequestParam("id") Long id, Model model) {
         try {
             List<User> users = userService.getAllUsers();
             User user = users.stream()
@@ -42,13 +42,13 @@ public class UserController {
                     .findFirst()
                     .orElse(null);
             if (user == null) {
-                model.addAttribute("error", "User not found");
+                model.addAttribute("error", "Пользователь не найден");
                 return "error";
             }
             model.addAttribute("user", user);
             return "user-details";
         } catch (SQLException e) {
-            model.addAttribute("error", "Error loading user: " + e.getMessage());
+            model.addAttribute("error", "Ошибка загрузки пользователя: " + e.getMessage());
             return "error";
         }
     }
@@ -65,13 +65,13 @@ public class UserController {
             userService.saveUser(user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
             return "redirect:/users";
         } catch (SQLException e) {
-            model.addAttribute("error", "Error creating user: " + e.getMessage());
+            model.addAttribute("error", "Ошибка создания пользователя: " + e.getMessage());
             return "error";
         }
     }
 
-    @GetMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    @GetMapping("/edit")
+    public String showEditForm(@RequestParam("id") Long id, Model model) {
         try {
             List<User> users = userService.getAllUsers();
             User user = users.stream()
@@ -79,19 +79,21 @@ public class UserController {
                     .findFirst()
                     .orElse(null);
             if (user == null) {
-                model.addAttribute("error", "User not found");
+                model.addAttribute("error", "Пользователь не найден");
                 return "error";
             }
             model.addAttribute("user", user);
             return "user-edit";
         } catch (SQLException e) {
-            model.addAttribute("error", "Error loading user: " + e.getMessage());
+            model.addAttribute("error", "Ошибка загрузки пользователя: " + e.getMessage());
             return "error";
         }
     }
 
-    @PutMapping("/{id}")
-    public String updateUser(@PathVariable Long id, @ModelAttribute User user, Model model) {
+    @PostMapping("/update")
+    public String updateUser(@RequestParam("id") Long id,
+                             @ModelAttribute User user,
+                             Model model) {
         try {
             List<User> users = userService.getAllUsers();
             User existingUser = users.stream()
@@ -99,25 +101,25 @@ public class UserController {
                     .findFirst()
                     .orElse(null);
             if (existingUser == null) {
-                model.addAttribute("error", "User not found");
+                model.addAttribute("error", "Пользователь не найден");
                 return "error";
             }
             userService.removeUserById(id);
             userService.saveUser(user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
             return "redirect:/users";
         } catch (SQLException e) {
-            model.addAttribute("error", "Error updating user: " + e.getMessage());
+            model.addAttribute("error", "Ошибка обновления пользователя: " + e.getMessage());
             return "error";
         }
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id, Model model) {
+    @PostMapping("/delete")
+    public String deleteUser(@RequestParam("id") Long id, Model model) {
         try {
             userService.removeUserById(id);
             return "redirect:/users";
         } catch (Exception e) {
-            model.addAttribute("error", "Error deleting user: " + e.getMessage());
+            model.addAttribute("error", "Ошибка удаления пользователя: " + e.getMessage());
             return "error";
         }
     }

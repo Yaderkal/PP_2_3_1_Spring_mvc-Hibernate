@@ -1,10 +1,7 @@
 package web.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.*;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -28,9 +25,9 @@ import java.util.Properties;
 )
 @EnableTransactionManagement
 public class AppConfig {
-
-    @Bean
-    public DataSource dataSource() {
+    @Primary
+    @Bean(name = "mysqlDataSource")
+    public DataSource mysqlDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
@@ -42,11 +39,24 @@ public class AppConfig {
         dataSource.setMaxTotal(10);
         return dataSource;
     }
+    //Со слоном пока ничего не добавлял, кроме этого бина
+    //Просто пробовал запустить из контейнера
+/*
+    @Bean(name = "postgresDataSource")
+    public DataSource postgresDataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://127.0.0.1:5432/mykatatest");
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
+        return dataSource;
+    }
+*/
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-        emf.setDataSource(dataSource());
+        emf.setDataSource(mysqlDataSource());
         emf.setPackagesToScan("web.model");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

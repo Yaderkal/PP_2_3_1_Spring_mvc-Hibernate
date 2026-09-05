@@ -4,29 +4,45 @@
     <meta charset="UTF-8">
     <title>Редактирование пользователя</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-        h1 { color: #333; margin-bottom: 30px; text-align: center; }
-        .form-group { margin-bottom: 20px; }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
         label {
             display: block;
             margin-bottom: 5px;
             color: #333;
             font-weight: 600;
         }
+
         input {
             width: 100%;
             padding: 10px;
@@ -35,10 +51,12 @@
             font-size: 14px;
             transition: border-color 0.3s;
         }
+
         input:focus {
             outline: none;
             border-color: #667eea;
         }
+
         .btn {
             display: inline-block;
             padding: 12px 30px;
@@ -51,19 +69,28 @@
             transition: all 0.3s;
             margin: 5px;
         }
+
         .btn:hover {
             background: #5566d6;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        .btn-secondary { background: #6c757d; }
-        .btn-secondary:hover { background: #5a6268; }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
         .btn-group {
             display: flex;
             gap: 10px;
             margin-top: 20px;
             justify-content: center;
         }
+
         .readonly {
             background: #e9ecef;
             cursor: not-allowed;
@@ -72,7 +99,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>✏️ Редактирование пользователя</h1>
+    <h1>♿♿♿♿♿ Редактирование пользователя ♿♿♿♿♿</h1>
 
     <form th:action="@{/users/{id}(id=${user.id})}" method="post">
         <input type="hidden" name="_method" value="put">
@@ -89,7 +116,8 @@
 
         <div class="form-group">
             <label for="middleName">Отчество:</label>
-            <input type="text" id="middleName" th:value="${user.middleName}" name="middleName" placeholder="Введите отчество"/>
+            <input type="text" id="middleName" th:value="${user.middleName}" name="middleName"
+                   placeholder="Введите отчество"/>
         </div>
 
         <div class="form-group">
