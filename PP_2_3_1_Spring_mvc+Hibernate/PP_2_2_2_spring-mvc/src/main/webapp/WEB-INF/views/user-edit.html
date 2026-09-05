@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Редактировать</title>
+    <title>Редактирование пользователя</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -72,7 +72,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Редактирование</h1>
+    <h1>✏️ Редактирование пользователя</h1>
 
     <form th:action="@{/users/{id}(id=${user.id})}" method="post">
         <input type="hidden" name="_method" value="put">
@@ -83,28 +83,28 @@
         </div>
 
         <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" th:value="${user.name}" name="name" placeholder="Enter name"/>
+            <label for="name">Имя:</label>
+            <input type="text" id="name" th:value="${user.name}" name="name" placeholder="Введите имя"/>
         </div>
 
         <div class="form-group">
-            <label for="middleName">Middle Name:</label>
-            <input type="text" id="middleName" th:value="${user.middleName}" name="middleName" placeholder="Enter middle name"/>
+            <label for="middleName">Отчество:</label>
+            <input type="text" id="middleName" th:value="${user.middleName}" name="middleName" placeholder="Введите отчество"/>
         </div>
 
         <div class="form-group">
-            <label for="surName">Sur Name:</label>
-            <input type="text" id="surName" th:value="${user.surName}" name="surName" placeholder="Enter sur name"/>
+            <label for="surName">Фамилия:</label>
+            <input type="text" id="surName" th:value="${user.surName}" name="surName" placeholder="Введите фамилию"/>
         </div>
 
         <div class="form-group">
             <label for="mail">Email:</label>
-            <input type="email" id="mail" th:value="${user.mail}" name="mail" placeholder="Enter email"/>
+            <input type="email" id="mail" th:value="${user.mail}" name="mail" placeholder="Введите email"/>
         </div>
 
         <div class="btn-group">
-            <button type="submit" class="btn">Обновить</button>
-            <a href="/users" class="btn btn-secondary">↩Отмена</a>
+            <button type="submit" class="btn">🔄 Обновить</button>
+            <a href="/users" class="btn btn-secondary">↩️ Отмена</a>
         </div>
     </form>
 </div>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create User</title>
+    <title>Создание пользователя</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -12,12 +12,12 @@
             padding: 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 40px 120px rgba(0,0,0,0.3);
         }
         h1 { color: #333; margin-bottom: 30px; text-align: center; }
         .form-group { margin-bottom: 20px; }
@@ -74,32 +74,32 @@
 </head>
 <body>
 <div class="container">
-    <h1>Добавить</h1>
+    <h1>♿♿♿♿♿ Создание нового пользователя ♿♿♿♿♿</h1>
 
     <form th:action="@{/users}" method="post">
         <div class="form-group">
             <label for="name">Имя:</label>
-            <input type="text" id="name" th:value="${user.name}" name="Имя" placeholder="Имя"/>
+            <input type="text" id="name" th:value="${user.name}" name="name" placeholder="Введите имя"/>
         </div>
 
         <div class="form-group">
-            <label for="middleName">Middle Name:</label>
-            <input type="text" id="middleName" th:value="${user.middleName}" name="Фамилия" placeholder="Фамилия"/>
+            <label for="middleName">Отчество:</label>
+            <input type="text" id="middleName" th:value="${user.middleName}" name="middleName" placeholder="Введите отчество"/>
         </div>
 
         <div class="form-group">
-            <label for="surName">Sur Name:</label>
-            <input type="text" id="surName" th:value="${user.surName}" name="Отчество" placeholder="Отчество"/>
+            <label for="surName">Фамилия:</label>
+            <input type="text" id="surName" th:value="${user.surName}" name="surName" placeholder="Введите фамилию"/>
         </div>
 
         <div class="form-group">
             <label for="mail">Email:</label>
-            <input type="email" id="mail" th:value="${user.mail}" name="почта" placeholder="формата фамлия@домен.ru"/>
+            <input type="email" id="mail" th:value="${user.mail}" name="mail" placeholder="Введите email"/>
         </div>
 
         <div class="btn-group">
-            <button type="submit" class="btn">Сохранить</button>
-            <a href="/users" class="btn btn-secondary">↩Отмена</a>
+            <button type="submit" class="btn">♿ Сохранить</button>
+            <a href="/users" class="btn btn-secondary">↩️ Отмена</a>
         </div>
     </form>
 </div>

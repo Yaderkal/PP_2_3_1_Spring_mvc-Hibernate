@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>Добро пожаловать</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -90,26 +90,29 @@
 </head>
 <body>
 <div class="container">
-    <h1>Spring MVC App</h1>
-    <p class="subtitle">CRUDы</p>
+    <h1>🚀 Spring MVC Приложение</h1>
+    <p class="subtitle">Система управления пользователями</p>
 
     <div>
-        <a href="/users" class="btn">Посмотреть</a>
-        <a href="/users/new" class="btn btn-secondary">Создать</a>
+        <a href="/users" class="btn">👥 Просмотр пользователей</a>
+        <a href="/users/new" class="btn btn-secondary">➕ Создать пользователя</a>
     </div>
 
     <div class="features">
         <div class="feature">
-            <h3>Если</h3>
-            <p>Вы видите </p>
+            <span class="icon">📋</span>
+            <h3>Список пользователей</h3>
+            <p>Просмотр всех зарегистрированных пользователей</p>
         </div>
         <div class="feature">
-            <h3>Эту</h3>
-            <p>Надпись, значит что-то</p>
+            <span class="icon">✏️</span>
+            <h3>Управление пользователями</h3>
+            <p>Создание, редактирование и удаление пользователей</p>
         </div>
         <div class="feature">
-            <h3>что-то</h3>
-            <p>пошло не так</p>
+            <span class="icon">💾</span>
+            <h3>Хранение данных</h3>
+            <p>Использование Hibernate и MySQL</p>
         </div>
     </div>
 </div>
