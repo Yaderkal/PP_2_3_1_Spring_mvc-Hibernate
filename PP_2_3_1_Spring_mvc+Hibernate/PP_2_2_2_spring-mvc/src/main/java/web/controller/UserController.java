@@ -112,6 +112,11 @@ public class UserController {
             return "error";
         }
     }
+    @GetMapping("/test")
+    @ResponseBody
+    public String test() {
+        return "Controller works!";
+    }
 
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("id") Long id, Model model) {
@@ -123,4 +128,5 @@ public class UserController {
             return "error";
         }
     }
+
 }
