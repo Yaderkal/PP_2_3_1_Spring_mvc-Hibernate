@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;
@@ -19,7 +18,6 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
-
     @Override
     public void createUsersTable() {
         userDAO.createUsersTable();
@@ -29,12 +27,12 @@ public class UserServiceImpl implements UserService {
     public void dropUsersTable() throws SQLException {
         userDAO.dropUsersTable();
     }
-
+    @Transactional
     @Override
     public void saveUser(String name, String middleName, String surName, String mail) throws SQLException {
         userDAO.saveUser(name, middleName, surName, mail);
     }
-
+    @Transactional
     @Override
     public void removeUserById(long id) {
         userDAO.removeUserById(id);
@@ -44,7 +42,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() throws SQLException {
         return userDAO.getAllUsers();
     }
-
+    @Transactional
     @Override
     public void cleanUsersTable() {
         userDAO.cleanUsersTable();

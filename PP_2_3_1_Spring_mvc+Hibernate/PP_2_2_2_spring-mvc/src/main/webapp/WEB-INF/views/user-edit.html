@@ -101,8 +101,8 @@
 <div class="container">
     <h1>♿♿♿♿♿ Редактирование пользователя ♿♿♿♿♿</h1>
 
-    <form th:action="@{/users/{id}(id=${user.id})}" method="post">
-        <input type="hidden" name="_method" value="put">
+    <form th:action="@{/users/update}" method="post">
+        <input type="hidden" name="id" th:value="${user.id}"/>
 
         <div class="form-group">
             <label for="id">ID:</label>

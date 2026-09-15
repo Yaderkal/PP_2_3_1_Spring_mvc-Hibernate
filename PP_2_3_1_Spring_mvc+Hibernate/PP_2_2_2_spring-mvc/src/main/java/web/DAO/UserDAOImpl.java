@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-@Transactional
 public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext
@@ -35,13 +34,13 @@ public class UserDAOImpl implements UserDAO {
         Query query = entityManager.createNativeQuery(sql);
         query.executeUpdate();
     }
-
+    @Transactional
     @Override
     public void saveUser(String name, String middleName, String surName, String mail) throws SQLException {
         User user = new User(name, middleName, surName, mail);
         entityManager.persist(user);
     }
-
+    @Transactional
     @Override
     public void removeUserById(long id) {
         User user = entityManager.find(User.class, id);
@@ -55,7 +54,7 @@ public class UserDAOImpl implements UserDAO {
         return entityManager.createQuery("SELECT u FROM User u", User.class)
                 .getResultList();
     }
-
+    @Transactional
     @Override
     public void cleanUsersTable() {
         entityManager.createQuery("DELETE FROM User").executeUpdate();
