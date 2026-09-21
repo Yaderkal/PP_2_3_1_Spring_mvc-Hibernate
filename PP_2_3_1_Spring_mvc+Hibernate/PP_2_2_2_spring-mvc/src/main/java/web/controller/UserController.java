@@ -23,34 +23,19 @@ public class UserController {
 
     @GetMapping
     public String getAllUsers(Model model) {
-        try {
-            List<User> users = userService.getAllUsers();
-            model.addAttribute("users", users);
-            return "users";
-        } catch (SQLException e) {
-            model.addAttribute("error", "Ошибка загрузки пользователей: " + e.getMessage());
-            return "error";
-        }
+        model.addAttribute("users", userService.getAllUsers());
+        return "users";
     }
 
     @GetMapping("/get")
     public String getUserById(@RequestParam("id") Long id, Model model) {
-        try {
-            List<User> users = userService.getAllUsers();
-            User user = users.stream()
-                    .filter(u -> u.getId().equals(id))
-                    .findFirst()
-                    .orElse(null);
-            if (user == null) {
-                model.addAttribute("error", "Пользователь не найден");
-                return "error";
-            }
-            model.addAttribute("user", user);
-            return "user-details";
-        } catch (SQLException e) {
-            model.addAttribute("error", "Ошибка загрузки пользователя: " + e.getMessage());
+        User user = userService.getUserById(id);
+        if (user == null) {
+            model.addAttribute("error", "Пользователь не найден");
             return "error";
         }
+        model.addAttribute("user", user);
+        return "user-details";
     }
 
     @GetMapping("/new")
@@ -61,56 +46,48 @@ public class UserController {
 
     @PostMapping
     public String createUser(@ModelAttribute User user, Model model) {
-        try {
-            userService.saveUser(user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
-            return "redirect:/users";
-        } catch (SQLException e) {
-            model.addAttribute("error", "Ошибка создания пользователя: " + e.getMessage());
-            return "error";
-        }
+        userService.saveUser(user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
+        return "redirect:/users";
     }
 
     @GetMapping("/edit")
     public String showEditForm(@RequestParam("id") Long id, Model model) {
-        try {
-            List<User> users = userService.getAllUsers();
-            User user = users.stream()
-                    .filter(u -> u.getId().equals(id))
-                    .findFirst()
-                    .orElse(null);
-            if (user == null) {
-                model.addAttribute("error", "Пользователь не найден");
-                return "error";
-            }
-            model.addAttribute("user", user);
-            return "user-edit";
-        } catch (SQLException e) {
-            model.addAttribute("error", "Ошибка загрузки пользователя: " + e.getMessage());
+        List<User> users = userService.getAllUsers();
+        User user = users.stream()
+                .filter(u -> u.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+        if (user == null) {
+            model.addAttribute("error", "Пользователь не найден");
             return "error";
         }
+        model.addAttribute("user", user);
+        return "user-edit";
     }
 
+//    @PostMapping("/update")
+//    public String updateUser(@RequestParam("id") Long id,
+//                             @ModelAttribute User user,
+//                             Model model) {
+//        List<User> users = userService.getAllUsers();
+//        User existingUser = userService.getUserById(id);
+//        if (existingUser == null) {
+//            model.addAttribute("error", "Пользователь не найден");
+//            return "error";
+//        }
+//        userService.removeUserById(id);
+//        userService.saveUser(user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
+//        return "redirect:/users";
+//    }
     @PostMapping("/update")
-    public String updateUser(@RequestParam("id") Long id,
-                             @ModelAttribute User user,
-                             Model model) {
+    public String updateUser(@ModelAttribute User user, Model model) {
         try {
-            List<User> users = userService.getAllUsers();
-            User existingUser = users.stream()
-                    .filter(u -> u.getId().equals(id))
-                    .findFirst()
-                    .orElse(null);
-            if (existingUser == null) {
-                model.addAttribute("error", "Пользователь не найден");
-                return "error";
-            }
-            userService.removeUserById(id);
-            userService.saveUser(user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
-            return "redirect:/users";
+            userService.updateUser(user.getId(), user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
         } catch (SQLException e) {
             model.addAttribute("error", "Ошибка обновления пользователя: " + e.getMessage());
             return "error";
         }
+        return "redirect:/users";
     }
     @GetMapping("/test")
     @ResponseBody

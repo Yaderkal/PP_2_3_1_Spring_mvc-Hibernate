@@ -9,13 +9,15 @@ public interface UserService {
 
     void createUsersTable();
 
-    void dropUsersTable() throws SQLException;
+    void dropUsersTable();
 
-    void saveUser(String name, String middleName, String surname, String mail) throws SQLException;
+    void saveUser(String name, String middleName, String surname, String mail);
+    User getUserById(Long id);
 
     void removeUserById(long id);
 
-    List<User> getAllUsers() throws SQLException;
+    List<User> getAllUsers();
 
     void cleanUsersTable();
+    void updateUser(Long id, String name, String middleName, String surName, String mail) throws SQLException;
 }
