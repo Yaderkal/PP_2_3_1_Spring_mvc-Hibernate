@@ -27,10 +27,6 @@ public class UserController {
     @GetMapping("/get")
     public String getUserById(@RequestParam("id") Long id, Model model) {
         User user = userService.getUserById(id);
-        if (user == null) {
-            model.addAttribute("error", "Пользователь не найден");
-            return "error";
-        }
         model.addAttribute("user", user);
         return "user-details";
     }

@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
         try {
             userDAO.createUsersTable();
         } catch (SQLException e) {
+            System.out.println("ошибка при создании таблицы");
             throw new RuntimeException(e);
         }
     }
@@ -34,35 +35,46 @@ public class UserServiceImpl implements UserService {
         try {
             userDAO.dropUsersTable();
         } catch (SQLException e) {
+            System.out.println("ошибка при удалении таблицы");
             throw new RuntimeException(e);
         }
     }
-    @Transactional(rollbackFor = SQLException.class)
+    @Transactional
     @Override
     public void saveUser(String name, String middleName, String surName, String mail) {
         try {
             userDAO.saveUser(name, middleName, surName, mail);
         } catch (SQLException e) {
+            System.out.println("ошибка при добавлении пользователя");
             throw new RuntimeException(e);
         }
     }
     @Transactional(readOnly = true)
     @Override
     public User getUserById(Long id) {
-        return userDAO.getUserById(id);
+        User user = userDAO.getUserById(id);
+        if (user == null) {
+            throw new RuntimeException("Пользователь с id=" + id + " не найден");
+        }
+        return user;
     }
 
     @Transactional
     @Override
     public void removeUserById(long id) {
+        User user = userDAO.getUserById(id);
+        if (user == null) {
+            throw new RuntimeException("Пользователь с id=" + id + " не найден");
+        }
         userDAO.removeUserById(id);
     }
-    @Transactional(readOnly = true, rollbackFor = SQLException.class)
+    @Transactional(readOnly = true)
     @Override
     public List<User> getAllUsers()  {
         try {
             return userDAO.getAllUsers();
         } catch (SQLException e) {
+            System.out.println("Ошибка при получении всех пользователей");
             throw new RuntimeException(e);
         }
     }
