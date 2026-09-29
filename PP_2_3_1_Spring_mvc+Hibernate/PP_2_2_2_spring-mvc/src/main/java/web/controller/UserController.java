@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
 
-import java.sql.SQLException;
-import java.util.List;
-
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -52,41 +49,14 @@ public class UserController {
 
     @GetMapping("/edit")
     public String showEditForm(@RequestParam("id") Long id, Model model) {
-        List<User> users = userService.getAllUsers();
-        User user = users.stream()
-                .filter(u -> u.getId().equals(id))
-                .findFirst()
-                .orElse(null);
-        if (user == null) {
-            model.addAttribute("error", "Пользователь не найден");
-            return "error";
-        }
+        User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "user-edit";
     }
 
-//    @PostMapping("/update")
-//    public String updateUser(@RequestParam("id") Long id,
-//                             @ModelAttribute User user,
-//                             Model model) {
-//        List<User> users = userService.getAllUsers();
-//        User existingUser = userService.getUserById(id);
-//        if (existingUser == null) {
-//            model.addAttribute("error", "Пользователь не найден");
-//            return "error";
-//        }
-//        userService.removeUserById(id);
-//        userService.saveUser(user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
-//        return "redirect:/users";
-//    }
     @PostMapping("/update")
     public String updateUser(@ModelAttribute User user, Model model) {
-        try {
-            userService.updateUser(user.getId(), user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
-        } catch (SQLException e) {
-            model.addAttribute("error", "Ошибка обновления пользователя: " + e.getMessage());
-            return "error";
-        }
+        userService.updateUser(user.getId(), user.getName(), user.getMiddleName(), user.getSurName(), user.getMail());
         return "redirect:/users";
     }
     @GetMapping("/test")

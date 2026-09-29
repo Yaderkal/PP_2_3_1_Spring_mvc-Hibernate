@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
         this.userDAO = userDAO;
     }
 
+    @Transactional
     @Override
     public void createUsersTable() {
         try {
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
     }
-
+    @Transactional
     @Override
     public void dropUsersTable()  {
         try {
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
     }
-    @Transactional
+    @Transactional(rollbackFor = SQLException.class)
     @Override
     public void saveUser(String name, String middleName, String surName, String mail) {
         try {
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
     }
-
+    @Transactional(readOnly = true)
     @Override
     public User getUserById(Long id) {
         return userDAO.getUserById(id);
@@ -56,15 +57,15 @@ public class UserServiceImpl implements UserService {
     public void removeUserById(long id) {
         userDAO.removeUserById(id);
     }
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, rollbackFor = SQLException.class)
     @Override
     public List<User> getAllUsers()  {
-    try {
-        return userDAO.getAllUsers();
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
+        try {
+            return userDAO.getAllUsers();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
     @Transactional
     @Override
     public void cleanUsersTable() {
@@ -76,7 +77,11 @@ public class UserServiceImpl implements UserService {
     }
     @Transactional
     @Override
-    public void updateUser(Long id, String name, String middleName, String surName, String mail) throws SQLException {
-        userDAO.updateUser(id, name, middleName, surName, mail);
+    public void updateUser(Long id, String name, String middleName, String surName, String mail) {
+        try {
+            userDAO.updateUser(id, name, middleName, surName, mail);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
