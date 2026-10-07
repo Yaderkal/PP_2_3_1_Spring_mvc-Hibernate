@@ -19,26 +19,7 @@ public class UserServiceImpl implements UserService {
         this.userDAO = userDAO;
     }
 
-    @Transactional
-    @Override
-    public void createUsersTable() {
-        try {
-            userDAO.createUsersTable();
-        } catch (SQLException e) {
-            System.out.println("ошибка при создании таблицы");
-            throw new RuntimeException(e);
-        }
-    }
-    @Transactional
-    @Override
-    public void dropUsersTable()  {
-        try {
-            userDAO.dropUsersTable();
-        } catch (SQLException e) {
-            System.out.println("ошибка при удалении таблицы");
-            throw new RuntimeException(e);
-        }
-    }
+
     @Transactional
     @Override
     public void saveUser(String name, String middleName, String surName, String mail) {
@@ -78,15 +59,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
     }
-    @Transactional
-    @Override
-    public void cleanUsersTable() {
-        try {
-            userDAO.cleanUsersTable();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     @Transactional
     @Override
     public void updateUser(Long id, String name, String middleName, String surName, String mail) {
