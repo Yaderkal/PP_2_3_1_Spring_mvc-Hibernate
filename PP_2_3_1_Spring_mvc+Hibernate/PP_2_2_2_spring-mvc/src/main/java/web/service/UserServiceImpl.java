@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;
@@ -20,33 +19,54 @@ public class UserServiceImpl implements UserService {
         this.userDAO = userDAO;
     }
 
+
+    @Transactional
     @Override
-    public void createUsersTable() {
-        userDAO.createUsersTable();
+    public void saveUser(String name, String middleName, String surName, String mail) {
+        try {
+            userDAO.saveUser(name, middleName, surName, mail);
+        } catch (SQLException e) {
+            System.out.println("ошибка при добавлении пользователя");
+            throw new RuntimeException(e);
+        }
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public User getUserById(Long id) {
+        User user = userDAO.getUserById(id);
+        if (user == null) {
+            throw new RuntimeException("Пользователь с id=" + id + " не найден");
+        }
+        return user;
     }
 
-    @Override
-    public void dropUsersTable() throws SQLException {
-        userDAO.dropUsersTable();
-    }
-
-    @Override
-    public void saveUser(String name, String middleName, String surName, String mail) throws SQLException {
-        userDAO.saveUser(name, middleName, surName, mail);
-    }
-
+    @Transactional
     @Override
     public void removeUserById(long id) {
+        User user = userDAO.getUserById(id);
+        if (user == null) {
+            throw new RuntimeException("Пользователь с id=" + id + " не найден");
+        }
         userDAO.removeUserById(id);
     }
-
+    @Transactional(readOnly = true)
     @Override
-    public List<User> getAllUsers() throws SQLException {
-        return userDAO.getAllUsers();
+    public List<User> getAllUsers()  {
+        try {
+            return userDAO.getAllUsers();
+        } catch (SQLException e) {
+            System.out.println("Ошибка при получении всех пользователей");
+            throw new RuntimeException(e);
+        }
     }
 
+    @Transactional
     @Override
-    public void cleanUsersTable() {
-        userDAO.cleanUsersTable();
+    public void updateUser(Long id, String name, String middleName, String surName, String mail) {
+        try {
+            userDAO.updateUser(id, name, middleName, surName, mail);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
