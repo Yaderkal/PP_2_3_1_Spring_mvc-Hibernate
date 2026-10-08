@@ -63,10 +63,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void updateUser(Long id, String name, String middleName, String surName, String mail) {
-        try {
-            userDAO.updateUser(id, name, middleName, surName, mail);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        userDAO.updateUser(id, name, middleName, surName, mail);
     }
 }

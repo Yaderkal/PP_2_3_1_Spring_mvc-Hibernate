@@ -9,8 +9,11 @@ public interface UserDAO {
 
     void saveUser(String name, String middleName, String surName, String mail) throws SQLException;
 
+    User getUserById(long id);
+
     void removeUserById(long id);
 
     List<User> getAllUsers() throws SQLException;
 
+    void updateUser(Long id, String name, String middleName, String surName, String mail);
 }

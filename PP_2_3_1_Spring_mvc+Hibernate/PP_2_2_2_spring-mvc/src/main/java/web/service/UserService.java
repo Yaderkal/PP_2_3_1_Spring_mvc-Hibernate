@@ -18,4 +18,6 @@ public interface UserService {
 
     List<User> getAllUsers() throws SQLException;
 
+    @Transactional
+    void updateUser(Long id, String name, String middleName, String surName, String mail);
 }
